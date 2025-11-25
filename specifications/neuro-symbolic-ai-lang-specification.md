@@ -1228,7 +1228,7 @@ y = 0
 ```python
 @declarative
 if x > 2 or x < -2 or y > 2 or y < -2:
-    raise Exception("Out of boundary")
+    raise Exception("Out of Boundary")
 ```
 
 ```python
@@ -1265,7 +1265,7 @@ move("up")
 
 ```python
 move("up")
-# Exception: Out of boundary
+# Exception: Out of Boundary
 ```
 
 ### Location with Direction
@@ -1304,10 +1304,23 @@ object1 = Object()
 object2 = Object()
 ```
 
+<img width="546" height="541" alt="image" src="https://github.com/user-attachments/assets/35fce86e-748f-40b2-b1ba-73ad17bec689" />
+
 ```python
 object1.turn("right")
 ```
 
+<img width="542" height="541" alt="image" src="https://github.com/user-attachments/assets/12be6b64-30f6-469a-8dfc-97c849ae1314" />
+
+
 ```python
 object1.move("right")
 ```
+
+<img width="544" height="540" alt="image" src="https://github.com/user-attachments/assets/bd867a61-6f61-46c9-b143-150e32b1cabc" />
+
+```python
+object1.move("up")
+# Exception: Wrong heading direction
+```
+
