@@ -20,16 +20,116 @@ The protocol's declarative nature makes it particularly suitable for neuro-symbo
 
 ## Lexical Analysis
 
-- Identifiers: Same rules as Python – begin with a letter or underscore and may include letters, digits,
-or underscores . Case is significant.
-- Literals: Numeric (int, float, etc.), string (single, double, triple quotes), boolean ( True / False ),
-and None as in Python. Numeric literals may use underscores for readability.
-- Comments: A # starts a comment (to end of line) as in Python . Encoding declarations (e.g. # -
-*- coding: utf-8 -*- ) follow Python conventions.
-- Operators/Delimiters: Standard Python operators apply. The dollar sign ( $ ) is reserved to
-introduce fact assertions (see Statements) . Other symbols ( ? , backtick, etc.) are not used.
-- Whitespace: Indentation is significant as in Python . Leading spaces/tabs determine block
-structure. Explicit ( \ ) and implicit line joins work as in Python. 
+Lexical analysis in NSAIP follows Python's lexical conventions with minimal extensions. Since NSAIP interprets standard Python syntax declaratively, the lexical structure remains fully compatible with Python's grammar, allowing NSAIP code to be parsed by standard Python parsers. The lexical elements—identifiers, literals, operators, comments, and whitespace—adhere to Python Language Reference specifications, with the addition of reserved symbols for future declarative constructs.
+
+### Identifiers
+
+Identifiers follow Python naming rules:
+- Must begin with a letter (`a-z`, `A-Z`) or underscore (`_`)
+- May contain letters, digits (`0-9`), and underscores
+- Are case-sensitive (`myVar` and `myvar` are distinct identifiers)
+- Cannot be Python keywords (`if`, `class`, `def`, etc.)
+
+**Examples:**
+```python
+user_count = 10
+_internal_state = True
+Account = class_definition
+price2024 = 99.99
+```
+
+### Literals
+
+NSAIP supports all standard Python literal forms:
+
+**Numeric Literals:**
+- Integers: `42`, `-17`, `1_000_000` (underscores for readability)
+- Floating-point: `3.14`, `-0.001`, `1e-10`, `2.5e3`
+- Complex: `3+4j`, `1.5-2.5j`
+
+**String Literals:**
+- Single quotes: `'hello'`
+- Double quotes: `"world"`
+- Triple quotes: `'''multi-line'''` or `"""text"""`
+- Raw strings: `r'\n is literal'`
+- F-strings: `f"Value: {x}"`
+
+**Boolean and None:**
+- Boolean values: `True`, `False`
+- Null value: `None`
+
+### Comments
+
+Comments follow Python conventions:
+- Single-line comments begin with `#` and extend to end of line
+- Encoding declarations are supported: `# -*- coding: utf-8 -*-`
+- Docstrings use triple-quoted strings and serve as documentation
+
+**Examples:**
+```python
+# This is a single-line comment
+x = 5  # Inline comment
+
+"""
+This is a multi-line docstring
+that documents a module or function.
+"""
+```
+
+### Operators and Delimiters
+
+NSAIP uses standard Python operators for arithmetic, comparison, logical operations, and structural delimiters:
+
+**Arithmetic:** `+`, `-`, `*`, `/`, `//`, `%`, `**`
+**Comparison:** `==`, `!=`, `<`, `>`, `<=`, `>=`
+**Logical:** `and`, `or`, `not`
+**Bitwise:** `&`, `|`, `^`, `~`, `<<`, `>>`
+**Assignment:** `=`, `+=`, `-=`, `*=`, `/=`, etc.
+**Delimiters:** `(`, `)`, `[`, `]`, `{`, `}`, `,`, `:`, `.`, `;`, `@`
+
+**Reserved Symbols:**
+- `$` — Reserved for future fact assertion syntax
+- `?` — Not used in current specification
+- Backtick — Not used in current specification
+
+### Whitespace and Indentation
+
+Whitespace handling follows Python's indentation-based block structure:
+
+**Indentation:**
+- Leading whitespace (spaces or tabs) determines code block nesting
+- Consistent indentation is required within a block
+- Standard convention: 4 spaces per indentation level
+
+**Line Continuation:**
+- Explicit continuation: Backslash `\` at end of line
+- Implicit continuation: Inside parentheses `()`, brackets `[]`, or braces `{}`
+
+**Examples:**
+```python
+# Indentation defines block structure
+if condition:
+    statement1
+    statement2
+
+# Explicit line continuation
+long_expression = value1 + value2 + \
+                  value3 + value4
+
+# Implicit line continuation
+result = function_call(
+    arg1,
+    arg2,
+    arg3
+)
+```
+
+### Encoding
+
+NSAIP source files are UTF-8 encoded by default, supporting international characters in strings and comments. Encoding declarations can be specified using:
+```python
+# -*- coding: utf-8 -*-
+``` 
 
 ## Data Model
 
