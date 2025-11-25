@@ -41,6 +41,8 @@ Variables in NSAIP serve as named references to values within the Logic Graph. U
 
 #### Global Variable
 
+Global variables are declared at the module level and remain accessible throughout the program execution. When a global variable is assigned an expression containing other variables, the runtime establishes dependency relationships that enable automatic propagation of changes. The following example demonstrates a simple global variable declaration and a dependent variable that automatically updates when its dependency changes.
+
 ```python
 pi = 3.14
 ```
@@ -57,6 +59,8 @@ area_of_circle = 4 * pi ** 2
 ```
 
 #### Local Variable
+
+Local variables are scoped to a specific context, such as within a function body or conditional block. They can reference global variables while maintaining their own local scope. Local variables participate in the same dependency tracking mechanism as global variables, but their lifetime and visibility are limited to their enclosing scope.
 
 ```python
 global = 1
@@ -93,7 +97,7 @@ person1 = Person("Alice", 25)
 
 #### Properties
 
-Each instance is stored in a class list, then later can be in query.
+Instance properties can be assigned both during initialization (via `__init__`) and after instance creation through direct property assignment. Each instance is registered in the class collection and stored as a node in the Logic Graph, making it queryable and subject to class-level declarative rules. Properties added dynamically become part of the instance's state and participate in dependency tracking.
 
 ```python
 class Vehicle:
@@ -105,6 +109,8 @@ vehicle1.color = "red"
 ```
 
 #### Query Expressions
+
+NSAIP provides built-in query methods for retrieving instances from the Logic Graph based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
 
 ```python
 class User:
@@ -134,6 +140,8 @@ Declarative statements form the core of NSAIP's reactive computation model. Unli
 
 #### Variable Level
 
+Variable-level declarative statements demonstrate the core reactive behavior of NSAIP. When variable `b` is defined as an expression involving `a`, the runtime creates a dependency edge from `a` to `b`. Subsequently, any reassignment to `a` triggers automatic recalculation of `b`, ensuring the relationship `b = a + 2` remains valid throughout execution.
+
 ```python
 a = 1
 b = a + 2
@@ -159,6 +167,8 @@ a = 2
 
 #### Instance Level
 
+Instance-level declarative statements define conditional rules that apply to specific object instances. These rules are stored in the Logic Graph and automatically re-evaluate when the properties they depend on change. In this example, the `archive` property is conditionally set based on the `status` property, creating a declarative constraint on the instance.
+
 ```python
 class Project:
     def __init__(self, name, status):
@@ -172,6 +182,8 @@ if library_project.status == "completed"
 ```
 
 #### Class Level
+
+Class-level declarative statements define properties or rules that apply universally to all instances of a class. When a property is assigned at the class level (e.g., `Human.mortal = True`), it becomes accessible through all instances of that class. This enables the expression of universal facts and shared characteristics across an entire class of objects.
 
 ```python
 class Human:
@@ -194,6 +206,8 @@ true
 
 #### `value` Property of Variable
 
+The `.value` accessor provides a mechanism to retrieve the current value of a variable without establishing a dependency relationship in the Logic Graph. This is useful when you want to capture a snapshot of a value at a specific moment without creating reactive behavior. In the example below, `balance1.amount` uses `rate.value` to get the current rate without making the amount dependent on future changes to `rate`.
+
 ```python
 rate = 1.15
 
@@ -206,6 +220,8 @@ balance1.amount = 1000 * rate.value
 ```
 
 #### `value` Property of Instance
+
+Similar to variables, instance properties can also be accessed using the `.value` suffix to obtain snapshot values without creating dependencies. This is particularly useful when combining instance properties with class-level properties, allowing selective control over which relationships should be reactive and which should be static.
 
 ```python
 class Stock:
@@ -220,6 +236,8 @@ stock1 = 22.5 * stock1.amount * stock1.rate.value
 ```
 
 #### If Statement
+
+Conditional statements at the class level define declarative rules that automatically re-evaluate when their predicate conditions change. The if-else structure creates branching logic nodes in the Logic Graph, and the appropriate branch is activated based on the current state. When an instance property changes and affects the condition, the runtime automatically updates the dependent properties according to the active branch.
 
 ```python
 class Account:
