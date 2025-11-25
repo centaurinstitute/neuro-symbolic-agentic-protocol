@@ -1,0 +1,1 @@
+- Neuro-Symbolic AI Protocol in @specifications\neuro-symbolic-ai-lang-specification.md is based on https://github.com/NucleoidAI/Nucleoid
