@@ -1300,6 +1300,12 @@ class Object:
 ```
 
 ```python
+@declarative
+if Object.x > 2 or Object.x < -2 or Object.y > 2 or Object.y < -2:
+    raise Exception("Out of Boundary")
+```
+
+```python
 object1 = Object()
 object2 = Object()
 ```
