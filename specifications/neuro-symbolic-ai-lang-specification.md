@@ -163,14 +163,19 @@ area_of_circle = 4 * pi ** 2
 Local variables are scoped to a specific context, such as within a function body or conditional block. They can reference global variables while maintaining their own local scope. Local variables participate in the same dependency tracking mechanism as global variables, but their lifetime and visibility are limited to their enclosing scope.
 
 ```python
-global = 1
+radius = 10
+volume = None
 
-    sum = global + 1
+    area = (radius ** 2) * 3.14
+    global volume
+    volume = area * 5
 ```
 
 ```python
-> mass(5)
-6
+> radius
+10
+> volume
+1570
 ```
 
 ### Classes
@@ -876,44 +881,10 @@ Standard Python type coercion rules apply:
 - Numeric operations follow standard promotion rules (int → float → complex)
 - String concatenation requires explicit conversion
 - Boolean contexts follow Python truthiness rules
+
 ## Exceptions
 
 NSAIP extends Python's exception handling model to work with the declarative runtime and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
-
-### Standard Python Exceptions
-
-All standard Python exceptions are supported and retain their normal semantics:
-
-**Syntax Errors**
-```python
-SyntaxError: Invalid Python syntax
-IndentationError: Incorrect indentation
-```
-Raised during statement parsing, before Logic Graph modifications.
-
-**Type Errors**
-```python
-TypeError: Unsupported operation for given types
-```
-Raised when operations are incompatible with operand types.
-
-**Name Errors**
-```python
-NameError: Undefined variable or attribute reference
-```
-Raised when referencing non-existent variables in expressions.
-
-**Attribute Errors**
-```python
-AttributeError: Object lacks requested attribute
-```
-Raised when accessing undefined properties on instances.
-
-**Value Errors**
-```python
-ValueError: Invalid value for operation
-```
-Raised when values are outside acceptable ranges.
 
 ### Logic Graph Exceptions
 
@@ -930,12 +901,18 @@ Raised when the dependency graph contains cycles that prevent deterministic eval
 ```python
 class Account:
     def __init__(self, balance):
-        assert balance >= 0, "Balance cannot be negative"
         self.balance = balance
 
+
+if Account.balance < 0:
+    raise ConstraintViolationError("Balance cannot be negative")
+```
+
+```python
 account1 = Account(100)
 account1.balance = -50  # ConstraintViolationError: Balance cannot be negative
 ```
+
 Raised when declarative constraints or assertions are violated during updates.
 
 **PropagationError**
