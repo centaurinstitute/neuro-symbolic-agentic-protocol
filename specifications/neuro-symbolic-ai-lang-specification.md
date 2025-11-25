@@ -33,7 +33,11 @@ structure. Explicit ( \ ) and implicit line joins work as in Python.
 
 ## Data Model
 
+The Data Model defines how NSAIP represents and manages program entities within the Logic Graph. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates. All entities in the data model are integrated into the Logic Graph, allowing automatic dependency tracking and reactive updates across the entire system.
+
 ### Variable
+
+Variables in NSAIP serve as named references to values within the Logic Graph. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. When a variable is assigned an expression containing other variables, the runtime creates dependency edges that enable automatic recomputation when source values change. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
 
 #### Global Variable
 
@@ -66,6 +70,8 @@ global = 1
 ```
 
 ### Classes
+
+Classes in NSAIP define templates for creating objects that are tracked within the Logic Graph. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
 
 ```python
 class Person:
@@ -123,6 +129,8 @@ user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 ```
 
 ## Declarative Statements
+
+Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the Logic Graph that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
 
 #### Variable Level
 
@@ -244,6 +252,8 @@ account1.balance = 1000
 
 ## Imperative Statements
 
+While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@Imperative` decorator marks statements for one-time execution, preventing the runtime from creating dependency edges or automatically updating values when dependencies change. This is useful for initialization code, side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
+
 ### Variable
 
 ```python
@@ -271,6 +281,8 @@ a = 2
 ```
 
 ## Compound Class Statements
+
+Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime creates transitive dependency chains through the Logic Graph. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
 
 ```python
 class Item:
@@ -302,6 +314,8 @@ order1 = Order(2, item1)
 
 ## Functions
 
+Functions in NSAIP define reusable computational procedures that can be invoked with arguments. While functions themselves are defined imperatively, their invocations within declarative expressions can create dependencies on function parameters. However, function definitions themselves do not automatically trigger recomputation of existing call sites when redefined—variables that depend on function calls retain their computed values unless explicitly reassigned. This behavior distinguishes function definitions from declarative variable assignments, as functions encapsulate imperative logic rather than establishing persistent relationships.
+
 ```python
 def mass(volume):
     ratio = 1.2
@@ -327,6 +341,8 @@ def mass(volume):
 ```
 
 ## MCP
+
+The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime treats it as a dependency source, enabling seamless integration of external information into the Logic Graph. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
 
 ```python
 class Stock:
