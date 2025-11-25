@@ -1222,7 +1222,8 @@ x = 0
 y = 0
 ```
 
-<img width="572" height="567" alt="image" src="https://github.com/user-attachments/assets/e0fb7ffe-e2d4-4706-a6d6-6b1193eaf0d0" />
+<img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/7fa4345d-b3ac-4602-a29e-f057ea8dab30" />
+
 
 ```python
 @declarative
@@ -1245,6 +1246,26 @@ def move(direction):
 
 ```python
 move("up")
+```
+
+<img width="540" height="541" alt="image" src="https://github.com/user-attachments/assets/39f8815f-da07-4a2a-98cc-9f35c07c267d" />
+
+```python
+move("right")
+```
+
+<img width="541" height="540" alt="image" src="https://github.com/user-attachments/assets/36f1f235-0bfe-41a3-8f37-c86ee431d746" />
+
+```python
+move("up")
+```
+
+<img width="541" height="538" alt="image" src="https://github.com/user-attachments/assets/8aed1d43-c46a-4cb6-bf47-14bac7df4ce8" />
+
+
+```python
+move("up")
+# Exception: Out of boundary
 ```
 
 ### Location with Direction
