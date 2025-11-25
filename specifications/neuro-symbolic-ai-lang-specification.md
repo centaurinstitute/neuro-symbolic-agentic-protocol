@@ -2,10 +2,9 @@
 
 ## 1. Introduction
 
-The Neuro-Symbolic AI Protocol extends Python with declarative constructs for symbolic reasoning. It integrates neural (data-driven) learning with symbolic logic inference.
+The Neuro-Symbolic AI Protocol (NSAIP) defines a unified framework for expressing logic, structure, and object semantics directly within Python. It interprets standard Python syntax as a declarative logical language, allowing rules, constraints, relationships, and object definitions to be represented symbolically while remaining fully compliant with Python’s grammar and execution model.
 
-Programs consist of class (object) declarations, fact assertions, and logic rules, all maintained in a unified Logic Graph for inference. This allows writing programs that
-“learn” from data and also perform logical deduction in a single framework.
+NSAIP provides a mechanism for transforming patterns learned by Large Language Models (LLMs) into explicit symbolic logic expressed entirely within standard Python syntax. Rather than maintaining a strict separation between neural inference and symbolic reasoning, the protocol embeds pattern-derived correlations, dependency structures, and abstractions directly into executable Python expressions. This allows LLM-generated insights to be represented as transparent, interpretable logical constructs, enabling Python to function simultaneously as a procedural language and a declarative logic formalism suitable for neuro-symbolic integration.
 
 ### 1.1
 ### 1.2
@@ -29,15 +28,15 @@ structure. Explicit ( \ ) and implicit line joins work as in Python.
 
 #### Global Variable
 
-```
+```python
 pi = 3.14
 ```
 
-```
+```python
 area_of_circle = 4 * pi ** 2
 ```
 
-```
+```python
 > pi
 3.14
 > area_of_circle
@@ -46,31 +45,31 @@ area_of_circle = 4 * pi ** 2
 
 #### Local Variable
 
-```
+```python
 global = 1
 
     sum = global + 1
 ```
 
-```
+```python
 > mass(5)
 6
 ```
 
 ### Classes
 
-```
+```python
 class Person:
     def __init__(self, name, age):
         self.name = name
         self.age = age
 ```
 
-```
+```python
 person1 = Person("Alice", 25)
 ```
 
-```
+```python
 > student1
 { "name": "Alice", "age": 25 }
 ```
@@ -81,7 +80,7 @@ person1 = Person("Alice", 25)
 
 Each instance is stored in a class list, then later can be in query.
 
-```
+```python
 class Vehicle:
     def __init__(self, model):
         self.model = model
@@ -92,21 +91,21 @@ vehicle1.color = "red"
 
 #### Query Expressions
 
-```
+```python
 class User:
     def __init__(self, email, password):
         self.email = email
         self.password = md5(password)
 ```
 
-```
+```python
 user1 = User("jordan.miller@testmail.local", "jmiller_2024!")
 user2 = User("sarah.chen@dev-example.net", "Sc!dev4392")
 user3 = User("michael.roberts@samplemail.org", "MRoberts#92")
 user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 ```
 
-```
+```python
 > User.where(lambda user: user.email == "jordan.miller@testmail.local")
 [{ "email": "jordan.miller@testmail.local", "password": "5188d1a5278b980296ed0af914682507" }]
 
@@ -118,23 +117,23 @@ user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 
 #### Variable Level
 
-```
+```python
 a = 1
 b = a + 2
 ```
 
-```
+```python
 > a
 1
 > b
 3
 ```
 
-```
+```python
 a = 2
 ```
 
-```
+```python
 > a
 2
 > b
@@ -143,7 +142,7 @@ a = 2
 
 #### Instance Level
 
-```
+```python
 class Project:
     def __init__(self, name, status):
         self.name = name
@@ -157,28 +156,28 @@ if library_project.status == "completed"
 
 #### Class Level
 
-```
+```python
 class Human:
     def __init__(self, name):
         self.name = name        
 ```
 
-```
+```python
 Human.mortal = True
 ```
 
-```
+```python
 human1 = Human("socrates")
 ```
 
-```
+```python
 > human1.mortal
 true
 ```
 
 #### `value` Property of Variable
 
-```
+```python
 rate = 1.15
 
 class Balance:
@@ -191,18 +190,21 @@ balance1.amount = 1000 * rate.value
 
 #### `value` Property of Instance
 
-	class Stock:
-	    rate = 0.05
-	    def __init__(amount):
-	        self.amount = 0
+```python
+class Stock:
+    rate = 0.05
+    def __init__(amount):
+        self.amount = 0
 ```
+	
+```python
 stock1 = Stock(5)
 stock1 = 22.5 * stock1.amount * stock1.rate.value
 ```
 
 #### If Statement
 
-```
+```python
 class Account:
     def __init__(balance):
         self.balance = balance
@@ -213,20 +215,20 @@ else
     Account.status = "normal"
 ```
 
-```
+```python
 account1 = Account(2000)
 ```
 
-```
+```python
 > account1.status
 "normal"
 ```
 
-```
+```python
 account1.balance = 1000
 ```
 
-```
+```python
 > account1.status
 "low"
 ```
@@ -235,24 +237,24 @@ account1.balance = 1000
 
 ### Variable
 
-```
+```python
 a = 1
 @Imperative
 b = a + 2
 ```
 
-```
+```python
 > a
 1
 > b
 3
 ```
 
-```
+```python
 a = 2
 ```
 
-```
+```python
 > a
 2
 > b
@@ -261,37 +263,37 @@ a = 2
 
 ## Compound Class Statements
 
-```
+```python
 class Item:
     def __init__(self, sku, price)
         self.sku = sku
         self.price = price
 ```
 
-```
+```python
 class Order:
     def __init__(self, qty, item):
         self.item = item
         self.qty = qty
 ```
 
-```
+```python
 Order.total = Order.item.price * Order.qty
 ```
 
-```
+```python
 item1 = Item("1000001", 100)
 order1 = Order(2, item1)
 ```
 
-```
+```python
 > order1.total
 200
 ```
 
 ## Functions
 
-```
+```python
 def mass(volume):
     ratio = 1.2
     return volume * ratio
@@ -299,25 +301,25 @@ def mass(volume):
 air_mass = mass(10) + 1
 ```
 
-```
+```python
 > air_mass
 13
 ```
 
-```
+```python
 def mass(volume):
     ratio = 1.3
     return volume * ratio
 ```
 
-```
+```python
 > air_mass
 13
 ```
 
 ## MCP
 
-```
+```python
 class Stock:
     def __init__(self, ticker, qty):
         self.ticker = ticker
@@ -326,11 +328,11 @@ class Stock:
 Stock.final_price = stock_mcp.get_price(Stock.ticker) * Stock.qty
 ```
 
-```
+```python
 stock1 = Stock("MM", 3)
 ```
 
-```
+```python
 > stock1
 { "ticker": "MM", "qty": 3 }
 ```
