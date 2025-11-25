@@ -1222,6 +1222,8 @@ x = 0
 y = 0
 ```
 
+<img width="572" height="567" alt="image" src="https://github.com/user-attachments/assets/e0fb7ffe-e2d4-4706-a6d6-6b1193eaf0d0" />
+
 ```python
 @declarative
 if x > 2 or x < -2 or y > 2 or y < -2:
