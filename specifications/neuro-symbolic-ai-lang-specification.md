@@ -1211,9 +1211,95 @@ This plasticity allows the system to learn and incorporate new patterns without 
 
 ## Use Cases
 
-### Socrates' Syllogism 
+### Socrates's Syllogism 
+
+```python
+class Human:
+    def __init__(self, name):
+        self.name = name        
+```
+
+```python
+Human.mortal = True
+```
+
+```python
+human1 = Human("socrates")
+```
+
+```python
+> human1.mortal
+true
+```
 
 ### Order Management
+
+```python
+class Item:
+    sku: str
+    price: float
+
+    def __init__(self, sku, price):
+        self.sku = sku
+        self.price = price
+```
+
+```python
+class Order:
+    item: Item
+    qty: int
+    status: str
+    shipping_fee: float
+
+    def __init__(self, qty: int, item: Item, status: str, shipping_fee: float):
+        self.item = item
+        self.qty = qty
+        self.status = status
+        self.shipping_fee = shipping_fee
+```
+
+```python
+Order.total = Order.item.price * Order.qty
+```
+
+```python
+if Order.total > 25:
+    Order.shipping_fee = 0
+```
+
+```python
+Order.final = Order.total + Order.shipping_fee
+```
+
+```python
+if Order.final > 1000:
+    Order.status = "audit"
+```
+
+```python
+if Order.status == "cancelled":
+    Order.final = 0
+```
+
+```python
+item1 = Item("100001", 100)
+item2 = Item("100002", 25)
+item3 = Item("100003", 5)
+
+order1 = Order(item1, 1)
+order2 = Order(item2, 10)
+order3 = Order(item3, 4)
+order4 = Order(item1, 100)
+```
+
+```python
+[
+    { "order": 1, "item": { "sku": "100001", "price": 100 }, "qty": 1, total: 100, shipping_fee: 0, final: 100 },
+    { "order": 2, "item": { "sku": "100002", "price": 25 }, "qty": 10, total: 250, shipping_fee: 0, final: 250 },
+    { "order": 3, "item": { "sku": "100003", "price": 5 }, "qty": 4, total: 20, shipping_fee: 25, final: 45 },
+    { "order": 4, "item": { "sku": "100001", "price": 100 }, "qty": 100, total: 10000, shipping_fee: 0, final: 10000, status: "audit" }
+]
+```
 
 ### Location
 
@@ -1223,7 +1309,6 @@ y = 0
 ```
 
 <img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/7fa4345d-b3ac-4602-a29e-f057ea8dab30" />
-
 
 ```python
 @declarative
@@ -1261,7 +1346,6 @@ move("up")
 ```
 
 <img width="541" height="538" alt="image" src="https://github.com/user-attachments/assets/8aed1d43-c46a-4cb6-bf47-14bac7df4ce8" />
-
 
 ```python
 move("up")
