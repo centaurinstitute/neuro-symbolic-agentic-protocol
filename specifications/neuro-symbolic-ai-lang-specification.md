@@ -2,17 +2,11 @@
 
 ## 1. Introduction
 
-The Neuro-Symbolic AI Protocol (NSAIP) defines a unified framework for expressing logic, structure, and object semantics directly within Python. It interprets standard Python syntax as a declarative logical language, allowing rules, constraints, relationships, and object definitions to be represented symbolically while remaining fully compliant with Python’s grammar and execution model.
+The Neuro-Symbolic AI Protocol (NSAIP) defines a unified framework for expressing logic, structure, and object semantics directly within Python. It interprets standard Python syntax as a declarative logical language, allowing rules, constraints, relationships, and object definitions to be represented symbolically while remaining fully compliant with Python’s grammar.
 
 NSAIP provides a mechanism for transforming patterns learned by Large Language Models (LLMs) into explicit symbolic logic expressed entirely within standard Python syntax. Rather than maintaining a strict separation between neural inference and symbolic reasoning, the protocol embeds pattern-derived correlations, dependency structures, and abstractions directly into executable Python expressions. This allows LLM-generated insights to be represented as transparent, interpretable logical constructs, enabling Python to function simultaneously as a procedural language and a declarative logic formalism suitable for neuro-symbolic integration.
 
-### 1.1 Declarative Runtime Model
-
-The Neuro-Symbolic AI Protocol operates as a declarative runtime that interprets Python statements in-flight, constructing a Logic Graph that captures relationships between both logic and data statements. Unlike traditional imperative execution models where statements are executed sequentially and forgotten, NSAIP maintains a persistent representation of all statements and their interdependencies. This allows the runtime to automatically propagate changes through the dependency graph, ensuring that all derived values remain consistent with their declarations.
-
-The runtime tracks each statement as it is received and dynamically creates dependency edges between variables, object properties, and logical expressions. When a value changes, the system traverses the graph to update all dependent computations automatically, providing reactive behavior without explicit event handling or manual synchronization code.
-
-### 1.2 Integration with Neural Systems
+### Integration with Neural Systems
 
 NSAIP provides a mechanism for transforming patterns learned by Large Language Models into explicit symbolic logic. Rather than maintaining a strict separation between neural inference and symbolic reasoning, the protocol enables LLM-generated insights to be represented as transparent, interpretable logical constructs expressed in standard Python syntax. This bridges the gap between statistical pattern recognition and formal logical deduction, allowing systems to combine the flexibility of neural learning with the rigor and explainability of symbolic AI.
 
@@ -141,7 +135,7 @@ Variables in NSAIP serve as named references to values within the Logic Graph. U
 
 #### Global Variable
 
-Global variables are declared at the module level and remain accessible throughout the program execution. When a global variable is assigned an expression containing other variables, the runtime establishes dependency relationships that enable automatic propagation of changes. The following example demonstrates a simple global variable declaration and a dependent variable that automatically updates when its dependency changes.
+Global variables are declared at the root level and remain accessible throughout the program execution. When a global variable is assigned an expression containing other variables, the runtime establishes dependency relationships that enable automatic propagation of changes. The following example demonstrates a simple global variable declaration and a dependent variable that automatically updates when its dependency changes.
 
 ```python
 pi = 3.14
@@ -322,6 +316,20 @@ class Balance:
 
 balance1 = Balance()
 balance1.amount = 1000 * rate.value
+```
+
+```python
+> balance1.amount
+1150
+```
+
+```python
+rate = 1.25
+```
+
+```python
+> balance1.amount
+1150
 ```
 
 #### `value` Property of Instance
@@ -508,27 +516,6 @@ Rather than requiring external database systems, the runtime maintains its own p
 - **Maintains History**: Transaction log enables replay and recovery
 - **Supports Transactions**: ACID properties ensure consistency
 
-### On-Chain Data Model
-
-Data and logic are stored together "on-chain" within the same runtime environment:
-
-```python
-class User:
-    def __init__(self, email, password):
-        self.email = email
-        self.password = md5(password)
-
-user1 = User("jordan.miller@testmail.local", "jmiller_2024!")
-# Both the User class definition and user1 instance are persisted
-```
-
-When this code executes:
-1. The `User` class definition is added to the graph and persisted
-2. The `user1` instance is created as a graph node
-3. Property values are stored as node attributes
-4. References between user1 and the User class are maintained
-5. All state is immediately available for querying without database round-trips
-
 ### Declarative Persistence
 
 Persistence occurs automatically as a side effect of statement execution. Developers do not need to:
@@ -557,16 +544,7 @@ User.find(lambda user: user.email == "sarah.chen@dev-example.net")
 
 These queries execute directly against the in-memory Logic Graph without SQL translation or external database queries, providing near-instantaneous results.
 
-### Performance Characteristics
 
-The integrated persistence model provides:
-
-- **Reduced I/O**: Data resides in memory with asynchronous persistence
-- **Linear Scaling**: For average-complexity applications, close to O(n) performance
-- **No Network Latency**: Eliminates database connection overhead
-- **Consistent State**: No synchronization delays between compute and storage layers
-
-This architecture is particularly suited for applications where logic and data are tightly coupled and where the overhead of traditional database systems would exceed the benefits of separate storage.
 ## Top-Level Components
 
 The NSAIP runtime consists of several interconnected subsystems that work together to provide declarative execution with automatic reasoning:
@@ -894,7 +872,7 @@ Standard Python type coercion rules apply:
 
 NSAIP extends Python's exception handling model to work with the declarative runtime and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
 
-### Logic Graph Exceptions
+### Logic Exceptions
 
 NSAIP introduces additional exception types specific to declarative reasoning:
 
@@ -946,133 +924,6 @@ When an exception occurs during statement execution, the transaction model ensur
 4. Persistence layer discards uncommitted changes
 5. Exception is raised to the caller
 
-**Example**:
-```python
-a = 5
-b = a + 2  # b = 7
-
-try:
-    a = 10 / 0  # Raises ZeroDivisionError
-except ZeroDivisionError:
-    pass
-
-# Graph state is unchanged: a = 5, b = 7
-```
-
-The Logic Graph remains in its pre-exception state, ensuring consistency even when errors occur.
-
-### Exception Propagation
-
-Exceptions propagate through the dependency graph during updates:
-
-```python
-def risky_operation(x):
-    if x < 0:
-        raise ValueError("x must be non-negative")
-    return x * 2
-
-a = 5
-b = risky_operation(a)  # b = 10
-
-a = -3  # Triggers recalculation of b
-# ValueError is raised during propagation, transaction rolls back
-# a remains 5, b remains 10
-```
-
-### Error Recovery
-
-The runtime provides mechanisms for graceful error recovery:
-
-**Try-Except in Declarative Context**
-```python
-try:
-    risky_value = compute_risky()
-except Exception:
-    risky_value = default_value
-```
-
-**Conditional Guards**
-```python
-if safe_condition:
-    result = potentially_failing_operation()
-else:
-    result = safe_fallback()
-```
-
-**Assertion-Based Validation**
-```python
-class ValidatedAccount:
-    def __init__(self, balance):
-        assert balance >= 0
-        self.balance = balance
-```
-
-### Exception Handling Best Practices
-
-1. **Validate at Boundaries**: Use assertions in `__init__` to validate instance creation
-2. **Guard Dependencies**: Ensure dependent expressions cannot produce invalid states
-3. **Use Conditional Logic**: Prevent exceptions through declarative conditions
-4. **Handle External Calls**: Wrap external service calls (MCP, etc.) in try-except blocks
-5. **Design for Rollback**: Ensure operations are atomic and can be safely reverted
-
-### Debugging Support
-
-When exceptions occur, the runtime provides:
-
-- **Stack Traces**: Full call stack including dependency chain
-- **Graph Context**: Information about graph state at time of error
-- **Transaction Log**: Sequence of operations leading to the exception
-- **Dependency Path**: Which dependencies triggered the failing update
-
-This helps developers identify not just where the error occurred, but which declarative relationships caused the problematic update.
-## Logic Graph
-
-The Logic Graph is the central data structure that represents the complete state of the program, including all relationships between variables, objects, properties, and logical constraints. It is a directed graph where:
-
-- **Nodes** represent program entities: variables, object instances, class definitions, functions, and conditional blocks
-- **Edges** represent dependencies and data flow relationships between entities
-
-### Graph Construction
-
-The runtime constructs the Logic Graph incrementally as statements are received:
-
-1. Each variable assignment creates a node for the variable
-2. Dependencies in expressions create directed edges from referenced variables to the result variable
-3. Object instantiations create nodes linked to their class definitions
-4. Property assignments create edges from the object to its properties
-5. Conditional statements create branching nodes with separate subgraphs for each branch
-6. Class-level declarations create template edges that are inherited by all instances
-
-Example:
-```python
-a = 1
-b = a + 2
-c = b * 3
-```
-
-This creates a graph: `a → b → c` where edges indicate dependency relationships.
-
-### Automatic Propagation
-
-When any node's value changes, the runtime:
-
-1. Identifies all dependent nodes by traversing outgoing edges
-2. Recalculates values in topological order to maintain consistency
-3. Recursively updates all transitive dependencies
-4. Applies conditional logic to determine which branches are active
-
-This ensures that the entire system state remains consistent with all declared relationships without requiring explicit update logic.
-
-### Graph Plasticity
-
-The Logic Graph exhibits **plasticity**—the ability to modify its structure in response to new information. New statements can:
-
-- Add new nodes and edges to the graph
-- Redefine existing relationships by updating edge connections
-- Introduce new constraints that affect multiple existing nodes
-- Be integrated without requiring system restarts or recompilation
-
-This adaptive capability is essential for neuro-symbolic systems where learned patterns must be dynamically incorporated into the reasoning framework.
 ## Logic Representation
 
 The Logic Graph represents logical relationships using both first-order and higher-order logic constructs, allowing expression of complex reasoning patterns within standard Python syntax.
@@ -1149,7 +1000,7 @@ All program entities—variables, objects, class definitions, and logical relati
 - **Automatic Synchronization**: Changes propagate immediately through the graph
 - **Transactional Integrity**: Updates either complete fully or roll back entirely
 
-### Declarative State Updates
+### State Updates
 
 State changes occur through declarative reassignment rather than imperative mutation:
 
@@ -1197,17 +1048,6 @@ Each statement execution constitutes a transaction:
 6. **Rollback**: On error, all changes are reverted
 
 This ensures the Logic Graph never enters an inconsistent state, maintaining logical integrity across all declarative constraints.
-
-### Plasticity and Adaptation
-
-The state model supports **dynamic reconfiguration** where new statements can modify the structure of the state space itself:
-
-- Adding new classes extends the type system
-- New class-level rules create additional computed properties on all instances
-- Conditional logic can introduce context-dependent state transformations
-- The dependency graph restructures itself to accommodate new relationships
-
-This plasticity allows the system to learn and incorporate new patterns without requiring predefined schemas or restart procedures.
 
 ## Use Cases
 
