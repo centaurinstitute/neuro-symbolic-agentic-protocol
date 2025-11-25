@@ -381,8 +381,15 @@ While NSAIP operates primarily in a declarative mode, certain situations require
 
 ```python
 a = 1
-@Imperative
+@imperative
 b = a + 2
+```
+
+or
+
+```python
+a = 1
+b = a.value + 2
 ```
 
 ```python
@@ -440,6 +447,7 @@ order1 = Order(2, item1)
 Functions in NSAIP define reusable computational procedures that can be invoked with arguments. While functions themselves are defined imperatively, their invocations within declarative expressions can create dependencies on function parameters. However, function definitions themselves do not automatically trigger recomputation of existing call sites when redefined—variables that depend on function calls retain their computed values unless explicitly reassigned. This behavior distinguishes function definitions from declarative variable assignments, as functions encapsulate imperative logic rather than establishing persistent relationships.
 
 ```python
+@declarative
 def mass(volume):
     ratio = 1.2
     return volume * ratio
@@ -1200,3 +1208,83 @@ The state model supports **dynamic reconfiguration** where new statements can mo
 - The dependency graph restructures itself to accommodate new relationships
 
 This plasticity allows the system to learn and incorporate new patterns without requiring predefined schemas or restart procedures.
+
+## Use Cases
+
+### Socrates' Syllogism 
+
+### Order Management
+
+### Location
+
+```python
+x = 0
+y = 0
+```
+
+```python
+@declarative
+if x > 2 or x < -2 or y > 2 or y < -2:
+    raise Exception("Out of boundary")
+```
+
+```python
+@imperative
+def move(direction):
+    if direction is "up":
+        y += 1
+    elif direction is "down":
+        y -= 1
+    elif direction is "left":
+        x -= 1
+    elif direction is "right":
+        x += 1
+```
+
+```python
+move("up")
+```
+
+### Location with Direction
+
+```python
+class Object:
+    facing_direction = "up"
+
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+
+    @imperative
+    def turn(self, facing_direction):
+        if facing_direction not in ["up", "down", "left", "right"]
+            raise Exception("Wrong facing direction")
+        self.facing_direction = facing_direction
+
+    @imperative
+    def move(self, heading_direction):
+        if heading_direction is not self.facing_direction:
+            raise Exception("Wrong heading direction")
+
+        if heading_direction is "up":
+            self.y += 1
+        elif heading_direction is "down":
+            self.y -= 1
+        elif heading_direction is "left":
+            self.x -= 1
+        elif heading_direction is "right":
+            self.x += 1
+```
+
+```python
+object1 = Object()
+object2 = Object()
+```
+
+```python
+object1.turn("right")
+```
+
+```python
+object1.move("right")
+```
