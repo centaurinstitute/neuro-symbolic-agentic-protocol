@@ -127,11 +127,11 @@ NSAIP source files are UTF-8 encoded by default, supporting international charac
 
 ## Data Model
 
-The Data Model defines how NSAIP represents and manages program entities within the Logic Graph. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates. All entities in the data model are integrated into the Logic Graph, allowing automatic dependency tracking and reactive updates across the entire system.
+The Data Model defines how NSAIP represents and manages program entities within the Knowledge Graph. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates. All entities in the data model are integrated into the Knowledge Graph, allowing automatic dependency tracking and reactive updates across the entire system.
 
 ### Variable
 
-Variables in NSAIP serve as named references to values within the Logic Graph. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. When a variable is assigned an expression containing other variables, the runtime creates dependency edges that enable automatic recomputation when source values change. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
+Variables in NSAIP serve as named references to values within the Knowledge Graph. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. When a variable is assigned an expression containing other variables, the runtime creates dependency edges that enable automatic recomputation when source values change. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
 
 #### Global Variable
 
@@ -174,7 +174,7 @@ volume = None
 
 ### Classes
 
-Classes in NSAIP define templates for creating objects that are tracked within the Logic Graph. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
+Classes in NSAIP define templates for creating objects that are tracked within the Knowledge Graph. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
 
 ```python
 class Person:
@@ -196,7 +196,7 @@ person1 = Person("Alice", 25)
 
 #### Properties
 
-Instance properties can be assigned both during initialization (via `__init__`) and after instance creation through direct property assignment. Each instance is registered in the class collection and stored as a node in the Logic Graph, making it queryable and subject to class-level declarative rules. Properties added dynamically become part of the instance's state and participate in dependency tracking.
+Instance properties can be assigned both during initialization (via `__init__`) and after instance creation through direct property assignment. Each instance is registered in the class collection and stored as a node in the Knowledge Graph, making it queryable and subject to class-level declarative rules. Properties added dynamically become part of the instance's state and participate in dependency tracking.
 
 ```python
 class Vehicle:
@@ -209,7 +209,7 @@ vehicle1.color = "red"
 
 #### Query Expressions
 
-NSAIP provides built-in query methods for retrieving instances from the Logic Graph based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
+NSAIP provides built-in query methods for retrieving instances from the Knowledge Graph based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
 
 ```python
 class User:
@@ -235,7 +235,7 @@ user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 
 ## Declarative Statements
 
-Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the Logic Graph that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
+Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the Knowledge Graph that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
 
 #### Variable Level
 
@@ -266,7 +266,7 @@ a = 2
 
 #### Instance Level
 
-Instance-level declarative statements define conditional rules that apply to specific object instances. These rules are stored in the Logic Graph and automatically re-evaluate when the properties they depend on change. In this example, the `archive` property is conditionally set based on the `status` property, creating a declarative constraint on the instance.
+Instance-level declarative statements define conditional rules that apply to specific object instances. These rules are stored in the Knowledge Graph and automatically re-evaluate when the properties they depend on change. In this example, the `archive` property is conditionally set based on the `status` property, creating a declarative constraint on the instance.
 
 ```python
 class Project:
@@ -305,7 +305,7 @@ true
 
 #### `value` Property of Variable
 
-The `.value` accessor provides a mechanism to retrieve the current value of a variable without establishing a dependency relationship in the Logic Graph. This is useful when you want to capture a snapshot of a value at a specific moment without creating reactive behavior. In the example below, `balance1.amount` uses `rate.value` to get the current rate without making the amount dependent on future changes to `rate`.
+The `.value` accessor provides a mechanism to retrieve the current value of a variable without establishing a dependency relationship in the Knowledge Graph. This is useful when you want to capture a snapshot of a value at a specific moment without creating reactive behavior. In the example below, `balance1.amount` uses `rate.value` to get the current rate without making the amount dependent on future changes to `rate`.
 
 ```python
 rate = 1.15
@@ -350,7 +350,7 @@ stock1 = 22.5 * stock1.amount * stock1.rate.value
 
 #### If Statement
 
-Conditional statements at the class level define declarative rules that automatically re-evaluate when their predicate conditions change. The if-else structure creates branching logic nodes in the Logic Graph, and the appropriate branch is activated based on the current state. When an instance property changes and affects the condition, the runtime automatically updates the dependent properties according to the active branch.
+Conditional statements at the class level define declarative rules that automatically re-evaluate when their predicate conditions change. The if-else structure creates branching logic nodes in the Knowledge Graph, and the appropriate branch is activated based on the current state. When an instance property changes and affects the condition, the runtime automatically updates the dependent properties according to the active branch.
 
 ```python
 class Account:
@@ -420,7 +420,7 @@ a = 2
 
 ## Compound Class Statements
 
-Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime creates transitive dependency chains through the Logic Graph. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
+Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime creates transitive dependency chains through the Knowledge Graph. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
 
 ```python
 class Item:
@@ -481,7 +481,7 @@ def mass(volume):
 
 ## MCP
 
-The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime treats it as a dependency source, enabling seamless integration of external information into the Logic Graph. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
+The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime treats it as a dependency source, enabling seamless integration of external information into the Knowledge Graph. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
 
 ```python
 class Stock:
@@ -505,7 +505,7 @@ stock1 = Stock("MM", 3)
 
 ## Data Persistence
 
-NSAIP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime manages object state and stores each transaction in the built-in data store by declaratively maintaining the Logic Graph structure.
+NSAIP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime manages object state and stores each transaction in the built-in data store by declaratively maintaining the Knowledge Graph structure.
 
 ### Built-in Storage Layer
 
@@ -542,7 +542,7 @@ User.where(lambda user: user.email.endswith("@testmail.local"))
 User.find(lambda user: user.email == "sarah.chen@dev-example.net")
 ```
 
-These queries execute directly against the in-memory Logic Graph without SQL translation or external database queries, providing near-instantaneous results.
+These queries execute directly against the in-memory Knowledge Graph without SQL translation or external database queries, providing near-instantaneous results.
 
 
 ## Top-Level Components
@@ -559,7 +559,7 @@ Receives Python statements and analyzes them to determine:
 
 The parser operates incrementally, processing statements as they arrive without requiring complete program files.
 
-### 2. Logic Graph Manager
+### 2. Knowledge Graph Manager
 
 Maintains the central graph data structure representing all program state:
 - Creates and updates nodes for variables, objects, and classes
@@ -616,7 +616,7 @@ Statement Input
       ↓
 Parser/Analyzer
       ↓
-Logic Graph Manager ←→ Dependency Tracker
+Knowledge Graph Manager ←→ Dependency Tracker
       ↓
 Inference Engine ←→ State Manager
       ↓
@@ -650,13 +650,13 @@ Defines both a type template and a storage collection for instances.
 ```python
 ClassName.property = expression
 ```
-Establishes a computed property that applies to all instances of the class, creating a rule in the Logic Graph.
+Establishes a computed property that applies to all instances of the class, creating a rule in the Knowledge Graph.
 
 **Instance Creation**
 ```python
 instance = ClassName(args)
 ```
-Creates a node in the Logic Graph, registers it with the class, and makes it queryable.
+Creates a node in the Knowledge Graph, registers it with the class, and makes it queryable.
 
 **Conditional Statements** (Declarative constraints)
 ```python
@@ -730,7 +730,7 @@ The grammar is interpreted with declarative semantics by default:
 This allows standard Python code to function as a declarative logic specification while remaining syntactically valid Python.
 ## Data Types
 
-NSAIP supports all standard Python data types with additional semantic behavior for tracking in the Logic Graph. Types are classified into primitive types, collection types, and symbolic types.
+NSAIP supports all standard Python data types with additional semantic behavior for tracking in the Knowledge Graph. Types are classified into primitive types, collection types, and symbolic types.
 
 ### Primitive Types
 
@@ -788,7 +788,7 @@ class Person:
 
 person1 = Person("Alice")
 ```
-User-defined types that become nodes in the Logic Graph. Each instance is:
+User-defined types that become nodes in the Knowledge Graph. Each instance is:
 - Tracked by the runtime
 - Queryable through class methods
 - Subject to class-level rules
@@ -800,7 +800,7 @@ def compute(x):
 ```
 Callable objects that can be invoked. Functions may create dependencies if used in declarative expressions.
 
-### Symbolic Types (Logic Graph Specific)
+### Symbolic Types (Knowledge Graph Specific)
 
 **Dependency References**
 When a variable appears in an expression, it creates a dependency reference rather than just copying the value:
@@ -823,14 +823,14 @@ if Account.balance < 1500:  # Predicate: Account → bool
     Account.status = "low"
 ```
 
-### Type Behavior in Logic Graph
+### Type Behavior in Knowledge Graph
 
 **Value Types vs. Reference Types**
 - Primitive types (int, float, str, bool) are stored as values
 - Objects and collections are stored as references with dependency edges
 
 **Type Preservation**
-The Logic Graph preserves type information across updates:
+The Knowledge Graph preserves type information across updates:
 ```python
 a = 5        # int
 b = a + 2    # int (preserves numeric type)
@@ -909,7 +909,7 @@ Raised when dependency updates fail due to runtime errors during recalculation.
 
 **GraphConsistencyError**
 ```python
-GraphConsistencyError: Logic Graph entered inconsistent state
+GraphConsistencyError: Knowledge Graph entered inconsistent state
 ```
 Raised when internal graph invariants are violated (indicates runtime bug).
 
@@ -926,7 +926,7 @@ When an exception occurs during statement execution, the transaction model ensur
 
 ## Logic Representation
 
-The Logic Graph represents logical relationships using both first-order and higher-order logic constructs, allowing expression of complex reasoning patterns within standard Python syntax.
+The Knowledge Graph represents logical relationships using both first-order and higher-order logic constructs, allowing expression of complex reasoning patterns within standard Python syntax.
 
 ### First-Order Logic
 
@@ -986,14 +986,14 @@ Order.item.price  # Composition: Order → Item → Price
 User.where(lambda user: user.email.endswith("@testmail.local"))
 ```
 
-These higher-order constructs enable the system to express meta-level reasoning patterns where rules themselves can be parameterized, composed, and reasoned about within the Logic Graph.
+These higher-order constructs enable the system to express meta-level reasoning patterns where rules themselves can be parameterized, composed, and reasoned about within the Knowledge Graph.
 ## State Management
 
-The NSAIP runtime employs an in-memory computing model where the complete program state resides in the Logic Graph. State management operates through a declarative model where the runtime automatically maintains consistency rather than requiring explicit state updates.
+The NSAIP runtime employs an in-memory computing model where the complete program state resides in the Knowledge Graph. State management operates through a declarative model where the runtime automatically maintains consistency rather than requiring explicit state updates.
 
 ### In-Memory State Model
 
-All program entities—variables, objects, class definitions, and logical relationships—exist as nodes in the Logic Graph maintained in memory. This provides:
+All program entities—variables, objects, class definitions, and logical relationships—exist as nodes in the Knowledge Graph maintained in memory. This provides:
 
 - **Fast Access**: No I/O operations required for state queries
 - **Consistent View**: All components see the same unified state
@@ -1020,7 +1020,7 @@ The runtime:
 
 ### Instance State Tracking
 
-Each object instance is tracked in the Logic Graph with edges to:
+Each object instance is tracked in the Knowledge Graph with edges to:
 - Its class definition (for inherited properties)
 - Its own property values
 - Other objects it references
@@ -1047,7 +1047,7 @@ Each statement execution constitutes a transaction:
 5. **Persist**: Transaction is committed to storage
 6. **Rollback**: On error, all changes are reverted
 
-This ensures the Logic Graph never enters an inconsistent state, maintaining logical integrity across all declarative constraints.
+This ensures the Knowledge Graph never enters an inconsistent state, maintaining logical integrity across all declarative constraints.
 
 ## Use Cases
 
