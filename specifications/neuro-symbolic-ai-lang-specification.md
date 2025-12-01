@@ -207,32 +207,6 @@ vehicle1 = Vehicle("Honda")
 vehicle1.color = "red"
 ```
 
-#### Query Expressions
-
-NSAIP provides built-in query methods for retrieving instances from the Knowledge Graph based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
-
-```python
-class User:
-    def __init__(self, email, password):
-        self.email = email
-        self.password = md5(password)
-```
-
-```python
-user1 = User("jordan.miller@testmail.local", "jmiller_2024!")
-user2 = User("sarah.chen@dev-example.net", "Sc!dev4392")
-user3 = User("michael.roberts@samplemail.org", "MRoberts#92")
-user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
-```
-
-```python
-> User.where(lambda user: user.email == "jordan.miller@testmail.local")
-[{ "email": "jordan.miller@testmail.local", "password": "5188d1a5278b980296ed0af914682507" }]
-
-> User.find(lambda user: user.email == "sarah.chen@dev-example.net")
-{ "email": "sarah.chen@dev-example.net", "password": "22497336687c6bbc110f64762b10e2ce" }
-```
-
 ## Declarative Statements
 
 Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the Knowledge Graph that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
@@ -416,6 +390,32 @@ a = 2
 2
 > b
 3
+```
+
+## Query Expressions
+
+NSAIP provides built-in query methods for retrieving instances from the Knowledge Graph based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
+
+```python
+class User:
+    def __init__(self, email, password):
+        self.email = email
+        self.password = md5(password)
+```
+
+```python
+user1 = User("jordan.miller@testmail.local", "jmiller_2024!")
+user2 = User("sarah.chen@dev-example.net", "Sc!dev4392")
+user3 = User("michael.roberts@samplemail.org", "MRoberts#92")
+user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
+```
+
+```python
+> User.where(lambda user: user.email == "jordan.miller@testmail.local")
+[{ "email": "jordan.miller@testmail.local", "password": "5188d1a5278b980296ed0af914682507" }]
+
+> User.find(lambda user: user.email == "sarah.chen@dev-example.net")
+{ "email": "sarah.chen@dev-example.net", "password": "22497336687c6bbc110f64762b10e2ce" }
 ```
 
 ## Compound Class Statements
