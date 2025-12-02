@@ -209,7 +209,7 @@ vehicle1.color = "red"
 
 ## Declarative Statements
 
-Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime system creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
+Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
 
 #### Variable Level
 
@@ -256,7 +256,7 @@ if library_project.status == "completed"
 
 #### Class Level
 
-Class-level declarative statements define properties or rules that apply universally to all instances of a class. When a property is assigned at the class level (e.g., `Human.mortal = True`), it becomes accessible through all instances of that class. This enables the expression of universal facts and shared characteristics across an entire class of objects.
+Class-level declarative statements define properties or rules that apply universally to all instances of a class. When a property is assigned at the class level, it becomes accessible through all instances of that class. This enables the expression of universal facts and shared characteristics across an entire class of objects.
 
 ```python
 class Human:
@@ -357,7 +357,8 @@ account1.balance = 1000
 
 ## Imperative Statements
 
-While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@Imperative` decorator marks statements for one-time execution, preventing the runtime system from creating dependency edges or automatically updating values when dependencies change. This is useful for initialization code, side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
+While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@imperative` decorator marks statements for one-time execution, preventing the runtime system from creating dependency or automatically updating values when dependencies change. This is useful for initialization code, 
+side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
 
 ### Variable
 
@@ -418,9 +419,9 @@ user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 { "email": "sarah.chen@dev-example.net", "password": "22497336687c6bbc110f64762b10e2ce" }
 ```
 
-## Compound Class Statements
+## Multi-Class Statements
 
-Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime system creates transitive dependency chains through the system. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
+Multi-class statements define declarative rules and computed properties that traverse relationships between multiple classes. When a class-level property accesses attributes from a related class through object composition, the runtime system establishes transitive dependency chains that span class boundaries. This enables automatic propagation of changes across related objects: when a property in one class is modified, all dependent computed properties in related classes are automatically recalculated. These cross-class dependency chains support complex reasoning patterns where business rules and constraints naturally express relationships between different entity types, maintaining logical consistency throughout the compositional object graph.
 
 ```python
 class Item:
@@ -544,69 +545,6 @@ User.find(lambda user: user.email == "sarah.chen@dev-example.net")
 
 These queries execute directly against the in-memory system without SQL translation or external database queries, providing near-instantaneous results.
 
-
-## Top-Level Components
-
-The NSAIP runtime system consists of several interconnected subsystems that work together to provide declarative execution with automatic reasoning:
-
-### 1. Parser and Statement Analyzer
-
-Receives Python statements and analyzes them to determine:
-- Variable dependencies and references
-- Class and instance relationships
-- Conditional logic branches
-- Function calls and their side effects
-
-The parser operates incrementally, processing statements as they arrive without requiring complete program files.
-
-### 2. system Manager
-
-Maintains the central graph data structure representing all program state:
-- Creates and updates nodes for variables, objects, and classes
-- Establishes dependency edges based on expression analysis
-- Manages graph topology for efficient traversal
-- Handles graph modifications during plasticity operations
-
-### 3. Dependency Tracker
-
-Monitors relationships between entities to enable automatic propagation:
-- Builds dependency trees from expression analysis
-- Identifies affected nodes when values change
-- Determines topological execution order for updates
-- Detects circular dependencies and handles them appropriately
-
-### 4. Inference Engine
-
-Executes logical reasoning over the graph:
-- Evaluates expressions in the context of current graph state
-- Applies conditional logic based on predicate evaluation
-- Propagates changes through dependent relationships
-- Performs query resolution for `.where()` and `.find()` operations
-
-### 5. State Manager
-
-Coordinates the in-memory state model:
-- Maintains consistent object state across updates
-- Manages instance collections for each class
-- Tracks property values and computed attributes
-- Ensures transactional integrity during updates
-
-### 6. Persistence Layer
-
-Handles storage and recovery:
-- Persists statements as they are executed
-- Maintains transaction log for recovery
-- Provides durability guarantees
-- Supports state snapshots and replay
-
-### 7. Type System
-
-Manages class definitions and type relationships:
-- Stores class templates with their methods and properties
-- Handles inheritance and class-level declarations
-- Provides type checking for operations
-- Supports dynamic type extension
-
 ## Grammar
 
 NSAIP uses standard Python grammar as defined in the Python Language Reference, with additional semantic interpretations for declarative behavior. The grammar remains fully compatible with Python syntax, but the runtime system assigns declarative meanings to certain constructs.
@@ -664,7 +602,7 @@ Executes queries over all instances of the class.
 
 **Decorator Annotations**
 ```python
-@Imperative
+@imperative
 statement
 ```
 Marks statements as imperative, preventing automatic dependency tracking and propagation.
@@ -696,7 +634,7 @@ class_rule            ::= classname "." identifier "=" expression
 conditional_rule      ::= "if" expression ":" suite ["else" ":" suite]
 instance_query        ::= classname ".where(" lambda_expression ")"
                         | classname ".find(" lambda_expression ")"
-imperative_statement  ::= "@Imperative" NEWLINE statement
+imperative_statement  ::= "@imperative" NEWLINE statement
 ```
 
 ### Semantic Interpretation
