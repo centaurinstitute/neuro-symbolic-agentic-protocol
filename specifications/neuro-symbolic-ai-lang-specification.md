@@ -250,8 +250,22 @@ class Project:
         
 library_project = Project("Library Project", "started")
 
-if library_project.status == "completed"
-    library_project.archive = True
+if library_project.status == "completed":
+    library_project.archived = True
+```
+
+```
+> library_project
+{ "name": "Library Project", "status": "started" }
+```
+
+```
+library_project.status = "completed"
+```
+
+```
+> library_project
+{ "name": "Library Project", "status": "completed", "archived": true }
 ```
 
 #### Class Level
