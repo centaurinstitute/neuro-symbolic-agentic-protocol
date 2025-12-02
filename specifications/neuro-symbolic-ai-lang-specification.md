@@ -125,15 +125,15 @@ NSAIP source files are UTF-8 encoded by default, supporting international charac
 
 ## Data Model
 
-The Data Model defines how NSAIP represents and manages program entities within a Neuro-Symbolic AI system. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates.
+The Data Model defines how NSAIP represents and manages program entities within a Neuro-Symbolic AI system. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime system. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates.
 
 ### Variable
 
-Variables in NSAIP serve as named references to values within the system. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. When a variable is assigned an expression containing other variables, the runtime creates dependency edges that enable automatic recomputation when source values change. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
+Variables in NSAIP serve as named references to values within the system. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
 
 #### Global Variable
 
-Global variables are declared at the root level and remain accessible throughout the program execution. When a global variable is assigned an expression containing other variables, the runtime establishes dependency relationships that enable automatic propagation of changes. The following example demonstrates a simple global variable declaration and a dependent variable that automatically updates when its dependency changes.
+Global variables are declared at the root level and remain accessible throughout the program execution. When a global variable is assigned an expression containing other variables, the runtime system establishes dependency relationships that enable automatic propagation of changes. The following example demonstrates a simple global variable declaration and a dependent variable that automatically updates when its dependency changes.
 
 ```python
 pi = 3.14
@@ -168,11 +168,13 @@ volume = None
 10
 > volume
 1570
+> area
+NameError: name 'area' is not defined
 ```
 
 ### Classes
 
-Classes in NSAIP define templates for creating objects that are tracked within a Neuro-Symbolic AI system. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
+Classes in NSAIP define abstraction for creating objects that are tracked within a Neuro-Symbolic AI system. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime system, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
 
 ```python
 class Person:
@@ -207,11 +209,11 @@ vehicle1.color = "red"
 
 ## Declarative Statements
 
-Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
+Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. When a variable, property, or conditional statement is declared, the runtime system creates dependency edges and ensures that all dependent computations are automatically updated when their source values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
 
 #### Variable Level
 
-Variable-level declarative statements demonstrate the core reactive behavior of NSAIP. When variable `b` is defined as an expression involving `a`, the runtime creates a dependency edge from `a` to `b`. Subsequently, any reassignment to `a` triggers automatic recalculation of `b`, ensuring the relationship `b = a + 2` remains valid throughout execution.
+Variable-level declarative statements demonstrate the core reactive behavior of NSAIP. When variable `b` is defined as an expression involving `a`, the runtime system creates a dependency edge from `a` to `b`. Subsequently, any reassignment to `a` triggers automatic recalculation of `b`, ensuring the relationship `b = a + 2` remains valid throughout execution.
 
 ```python
 a = 1
@@ -322,7 +324,7 @@ stock1 = 22.5 * stock1.amount * stock1.rate.value
 
 #### If Statement
 
-Conditional statements at the class level define declarative rules that automatically re-evaluate when their predicate conditions change. The if-else structure creates branching logic nodes in the system, and the appropriate branch is activated based on the current state. When an instance property changes and affects the condition, the runtime automatically updates the dependent properties according to the active branch.
+Conditional statements at the class level define declarative rules that automatically re-evaluate when their predicate conditions change. The if-else structure creates branching logic nodes in the system, and the appropriate branch is activated based on the current state. When an instance property changes and affects the condition, the runtime system automatically updates the dependent properties according to the active branch.
 
 ```python
 class Account:
@@ -355,7 +357,7 @@ account1.balance = 1000
 
 ## Imperative Statements
 
-While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@Imperative` decorator marks statements for one-time execution, preventing the runtime from creating dependency edges or automatically updating values when dependencies change. This is useful for initialization code, side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
+While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@Imperative` decorator marks statements for one-time execution, preventing the runtime system from creating dependency edges or automatically updating values when dependencies change. This is useful for initialization code, side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
 
 ### Variable
 
@@ -418,7 +420,7 @@ user4 = User("anna.keller@mockserver.app", "AnnaKeller_88")
 
 ## Compound Class Statements
 
-Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime creates transitive dependency chains through the system. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
+Compound class statements express relationships and computed properties that span multiple classes. When one class references properties of another class through object composition, the runtime system creates transitive dependency chains through the system. These cross-class dependencies enable complex reasoning patterns where changes to one object automatically propagate through related objects. Class-level computed properties can access nested properties through reference chains, establishing declarative rules that maintain consistency across compositional relationships.
 
 ```python
 class Item:
@@ -479,7 +481,7 @@ def mass(volume):
 
 ## MCP
 
-The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime treats it as a dependency source, enabling seamless integration of external information into the system. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
+The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime system treats it as a dependency source, enabling seamless integration of external information into the system. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
 
 ```python
 class Stock:
@@ -503,11 +505,11 @@ stock1 = Stock("MM", 3)
 
 ## Data Persistence
 
-NSAIP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime manages object state and stores each transaction in the built-in data store by declaratively maintaining the system structure.
+NSAIP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime system manages object state and stores each transaction in the built-in data store by declaratively maintaining the system structure.
 
 ### Built-in Storage Layer
 
-Rather than requiring external database systems, the runtime maintains its own persistent storage that:
+Rather than requiring external database systems, the runtime system maintains its own persistent storage that:
 
 - **Stores Statements**: Each statement is persisted as part of the graph structure
 - **Preserves Dependencies**: Relationships between entities are stored along with values
@@ -522,7 +524,7 @@ Persistence occurs automatically as a side effect of statement execution. Develo
 - Manage connections or transactions manually
 - Synchronize between memory and storage
 
-The runtime automatically:
+The runtime system automatically:
 - Persists each statement as it is executed
 - Updates storage when values change through dependency propagation
 - Maintains referential integrity across all relationships
@@ -545,7 +547,7 @@ These queries execute directly against the in-memory system without SQL translat
 
 ## Top-Level Components
 
-The NSAIP runtime consists of several interconnected subsystems that work together to provide declarative execution with automatic reasoning:
+The NSAIP runtime system consists of several interconnected subsystems that work together to provide declarative execution with automatic reasoning:
 
 ### 1. Parser and Statement Analyzer
 
@@ -607,7 +609,7 @@ Manages class definitions and type relationships:
 
 ## Grammar
 
-NSAIP uses standard Python grammar as defined in the Python Language Reference, with additional semantic interpretations for declarative behavior. The grammar remains fully compatible with Python syntax, but the runtime assigns declarative meanings to certain constructs.
+NSAIP uses standard Python grammar as defined in the Python Language Reference, with additional semantic interpretations for declarative behavior. The grammar remains fully compatible with Python syntax, but the runtime system assigns declarative meanings to certain constructs.
 
 ### Statement Categories
 
@@ -768,7 +770,7 @@ class Person:
 person1 = Person("Alice")
 ```
 User-defined types that become nodes in the system. Each instance is:
-- Tracked by the runtime
+- Tracked by the runtime system
 - Queryable through class methods
 - Subject to class-level rules
 
@@ -825,7 +827,7 @@ x = "hello"  # x becomes str, dependencies are updated accordingly
 ```
 
 **Type Checking**
-The runtime performs dynamic type checking during expression evaluation:
+The runtime system performs dynamic type checking during expression evaluation:
 - Ensures operations are valid for operand types
 - Raises type errors for incompatible operations
 - Maintains type safety across dependency propagation
@@ -849,7 +851,7 @@ Standard Python type coercion rules apply:
 
 ## Exceptions
 
-NSAIP extends Python's exception handling model to work with the declarative runtime and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
+NSAIP extends Python's exception handling model to work with the declarative runtime system and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
 
 ### Logic Exceptions
 
@@ -884,13 +886,13 @@ Raised when declarative constraints or assertions are violated during updates.
 ```python
 PropagationError: Failed to propagate changes through dependency graph
 ```
-Raised when dependency updates fail due to runtime errors during recalculation.
+Raised when dependency updates fail due to runtime system errors during recalculation.
 
 **GraphConsistencyError**
 ```python
 GraphConsistencyError: Inconsistent State
 ```
-Raised when internal graph invariants are violated (indicates runtime bug).
+Raised when internal graph invariants are violated (indicates runtime system bug).
 
 ### Transaction Rollback
 
@@ -909,7 +911,7 @@ The system represents logical relationships using both first-order and higher-or
 
 ### First-Order Logic
 
-First-order logic statements express relationships between specific objects and their properties. The NSAIP runtime interprets standard Python expressions as first-order logical assertions:
+First-order logic statements express relationships between specific objects and their properties. The NSAIP runtime system interprets standard Python expressions as first-order logical assertions:
 
 **Atomic Facts**: Direct property assignments represent atomic predicates
 ```python
@@ -968,7 +970,7 @@ User.where(lambda user: user.email.endswith("@testmail.local"))
 These higher-order constructs enable the system to express meta-level reasoning patterns where rules themselves can be parameterized, composed, and reasoned about within the system.
 ## State Management
 
-The NSAIP runtime employs an in-memory computing model where the complete program state resides in the system. State management operates through a declarative model where the runtime automatically maintains consistency rather than requiring explicit state updates.
+The NSAIP runtime system employs an in-memory computing model where the complete program state resides in the system. State management operates through a declarative model where the runtime system automatically maintains consistency rather than requiring explicit state updates.
 
 ### In-Memory State Model
 
@@ -991,7 +993,7 @@ a = 2        # State update triggers propagation
              # b automatically becomes 4
 ```
 
-The runtime:
+The runtime system:
 1. Detects the assignment to `a`
 2. Traverses the dependency graph to find `b`
 3. Recalculates `b` using the new value of `a`
