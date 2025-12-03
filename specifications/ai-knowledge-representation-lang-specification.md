@@ -2,17 +2,17 @@
 
 ## 1. Introduction
 
-The Neuro-Symbolic AI Protocol (NSAIP) defines a unified framework for expressing logic, structure, and object semantics directly within Python. It interprets standard Python syntax as a declarative logical language, allowing rules, constraints, relationships, and object definitions to be represented symbolically while remaining fully compliant with Python’s grammar.
+The Neuro-Symbolic Agentic Protocol (NSAP) defines a unified framework for expressing logic, structure, and object semantics directly within Python. It interprets standard Python syntax as a declarative logical language, allowing rules, constraints, relationships, and object definitions to be represented symbolically while remaining fully compliant with Python’s grammar.
 
 ### Integration with Neural Systems
 
-NSAIP provides a mechanism for transforming patterns learned by Large Language Models (LLMs) into explicit symbolic logic expressed entirely within declarative Python syntax. Rather than maintaining a strict separation between neural inference and symbolic reasoning, the protocol embeds pattern-derived correlations, dependency structures, and abstractions directly into executable Python expressions. This allows LLM-generated insights to be represented as transparent, interpretable logical constructs, enabling Python to function simultaneously as a procedural language and a declarative logic formalism suitable for neuro-symbolic integration.
+NSAP provides a mechanism for transforming patterns learned by Large Language Models (LLMs) into explicit symbolic logic expressed entirely within declarative Python syntax. Rather than maintaining a strict separation between neural inference and symbolic reasoning, the protocol embeds pattern-derived correlations, dependency structures, and abstractions directly into executable Python expressions. This allows LLM-generated insights to be represented as transparent, interpretable logical constructs, enabling Python to function simultaneously as a procedural language and a declarative logic formalism suitable for neuro-symbolic integration.
 
 > The protocol's declarative nature makes it particularly suitable for Neuro-Symbolic integration, as neural networks can generate or modify logical rules that are immediately integrated into the reasoning system without requiring recompilation or system restarts.
 
 ## Lexical Analysis
 
-Lexical analysis in NSAIP follows Python's lexical conventions with minimal extensions. Since NSAIP interprets standard Python syntax declaratively, the lexical structure remains fully compatible with Python's grammar, allowing NSAIP code to be parsed by standard Python parsers. The lexical elements—identifiers, literals, operators, comments, and whitespace—adhere to Python Language Reference specifications, with the addition of reserved symbols for future declarative constructs.
+Lexical analysis in NSAP follows Python's lexical conventions with minimal extensions. Since NSAP interprets standard Python syntax declaratively, the lexical structure remains fully compatible with Python's grammar, allowing NSAP code to be parsed by standard Python parsers. The lexical elements—identifiers, literals, operators, comments, and whitespace—adhere to Python Language Reference specifications, with the addition of reserved symbols for future declarative constructs.
 
 ### Identifiers
 
@@ -32,7 +32,7 @@ price2024 = 99.99
 
 ### Literals
 
-NSAIP supports all standard Python literal forms:
+NSAP supports all standard Python literal forms:
 
 **Numeric Literals:**
 - Integers: `42`, `-17`, `1_000_000` (underscores for readability)
@@ -70,7 +70,7 @@ that documents a module or function.
 
 ### Operators and Delimiters
 
-NSAIP uses standard Python operators for arithmetic, comparison, logical operations, and structural delimiters:
+NSAP uses standard Python operators for arithmetic, comparison, logical operations, and structural delimiters:
 
 **Arithmetic:** `+`, `-`, `*`, `/`, `//`, `%`, `**`
 **Comparison:** `==`, `!=`, `<`, `>`, `<=`, `>=`
@@ -118,18 +118,18 @@ result = function_call(
 
 ### Encoding
 
-NSAIP source files are UTF-8 encoded by default, supporting international characters in strings and comments. Encoding declarations can be specified using:
+NSAP source files are UTF-8 encoded by default, supporting international characters in strings and comments. Encoding declarations can be specified using:
 ```python
 # -*- coding: utf-8 -*-
 ``` 
 
 ## Data Model
 
-The Data Model defines how NSAIP represents and manages program entities within a Neuro-Symbolic AI system. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime system. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates.
+The Data Model defines how NSAP represents and manages program entities within a Neuro-Symbolic AI system. It establishes the fundamental building blocks for declarative computation: variables that store values and maintain dependencies, classes that define object templates, and instances that represent individual entities tracked by the runtime system. The data model supports both global and local scopes, enables property-based object composition, and provides query mechanisms for retrieving instances based on logical predicates.
 
 ### Variable
 
-Variables in NSAIP serve as named references to values within the system. Unlike traditional imperative variables that simply hold values, NSAIP variables maintain dependency relationships with other variables and expressions. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
+Variables in NSAP serve as named references to values within the system. Unlike traditional imperative variables that simply hold values, NSAP variables maintain dependency relationships with other variables and expressions. Variables can be declared at global scope (accessible throughout the program) or local scope (limited to a specific context such as a function body).
 
 #### Global Variable
 
@@ -174,7 +174,7 @@ NameError: name 'area' is not defined
 
 ### Classes
 
-Classes in NSAIP define abstraction for creating objects that are tracked within a Neuro-Symbolic AI system. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime system, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
+Classes in NSAP define abstraction for creating objects that are tracked within a Neuro-Symbolic AI system. Each class declaration establishes both a type definition and a storage collection for instances. The `__init__` method specifies how instances are initialized with their properties. When a class is defined, it becomes a first-class entity in the runtime system, enabling class-level queries, computed properties, and declarative rules that apply to all instances. Classes serve as the foundation for object-oriented modeling within the neuro-symbolic framework.
 
 ```python
 class Person:
@@ -209,11 +209,11 @@ vehicle1.color = "red"
 
 ## Declarative Statements
 
-Declarative statements form the core of NSAIP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
+Declarative statements form the core of NSAP's reactive computation model. Unlike imperative statements that execute once and are forgotten, declarative statements establish persistent relationships in the system that automatically maintain consistency as values change. This section demonstrates declarative behavior at various levels: variable-level dependencies, instance-level properties, class-level rules, and conditional constraints.
 
 #### Variable Level
 
-Variable-level declarative statements demonstrate the core reactive behavior of NSAIP. When variable `b` is defined as an expression involving `a`, the runtime system creates a dependency edge from `a` to `b`. Subsequently, any reassignment to `a` triggers automatic recalculation of `b`, ensuring the relationship `b = a + 2` remains valid throughout execution.
+Variable-level declarative statements demonstrate the core reactive behavior of NSAP. When variable `b` is defined as an expression involving `a`, the runtime system creates a dependency edge from `a` to `b`. Subsequently, any reassignment to `a` triggers automatic recalculation of `b`, ensuring the relationship `b = a + 2` remains valid throughout execution.
 
 ```python
 a = 1
@@ -371,7 +371,7 @@ account1.balance = 1000
 
 ## Imperative Statements
 
-While NSAIP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@imperative` decorator marks statements for one-time execution, preventing the runtime system from creating dependency or automatically updating values when dependencies change. This is useful for initialization code, 
+While NSAP operates primarily in a declarative mode, certain situations require traditional imperative execution where statements execute once without establishing persistent dependencies. The `@imperative` decorator marks statements for one-time execution, preventing the runtime system from creating dependency or automatically updating values when dependencies change. This is useful for initialization code, 
 side-effect operations, or scenarios where reactive behavior would be inappropriate. Imperative statements provide an escape hatch from the declarative model when explicit control over execution is needed.
 
 ### Variable
@@ -409,7 +409,7 @@ a = 2
 
 ## Query Expressions
 
-NSAIP provides built-in query methods for retrieving instances from the system based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
+NSAP provides built-in query methods for retrieving instances from the system based on logical predicates. The `.where()` method returns all instances matching a given lambda predicate, while `.find()` returns a single instance that satisfies the condition. These queries execute directly against the in-memory graph without requiring external database systems or query languages.
 
 ```python
 class User:
@@ -467,7 +467,7 @@ order1 = Order(2, item1)
 
 ## Functions
 
-Functions in NSAIP define reusable computational procedures that can be invoked with arguments. While functions themselves are defined imperatively, their invocations within declarative expressions can create dependencies on function parameters. However, function definitions themselves do not automatically trigger recomputation of existing call sites when redefined—variables that depend on function calls retain their computed values unless explicitly reassigned. This behavior distinguishes function definitions from declarative variable assignments, as functions encapsulate imperative logic rather than establishing persistent relationships.
+Functions in NSAP define reusable computational procedures that can be invoked with arguments. While functions themselves are defined imperatively, their invocations within declarative expressions can create dependencies on function parameters. However, function definitions themselves do not automatically trigger recomputation of existing call sites when redefined—variables that depend on function calls retain their computed values unless explicitly reassigned. This behavior distinguishes function definitions from declarative variable assignments, as functions encapsulate imperative logic rather than establishing persistent relationships.
 
 ```python
 @declarative
@@ -496,7 +496,7 @@ def mass(volume):
 
 ## MCP
 
-The Model Context Protocol (MCP) integration enables NSAIP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime system treats it as a dependency source, enabling seamless integration of external information into the system. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
+The Model Context Protocol (MCP) integration enables NSAP to incorporate external data sources and services directly into declarative computations. MCP calls can be embedded within class-level property definitions, allowing computed properties to depend on external APIs, databases, or real-time data feeds. When an MCP service is invoked as part of a declarative expression, the runtime system treats it as a dependency source, enabling seamless integration of external information into the system. This bridges the gap between internal symbolic reasoning and external data systems, allowing the protocol to reason over both local state and remote resources.
 
 ```python
 class Stock:
@@ -520,7 +520,7 @@ stock1 = Stock("MM", 3)
 
 ## Data Persistence
 
-NSAIP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime system manages object state and stores each transaction in the built-in data store by declaratively maintaining the system structure.
+NSAP includes a built-in data persistence mechanism that eliminates the need for external databases. The runtime system manages object state and stores each transaction in the built-in data store by declaratively maintaining the system structure.
 
 ### Built-in Storage Layer
 
@@ -561,7 +561,7 @@ These queries execute directly against the in-memory system without SQL translat
 
 ## Grammar
 
-NSAIP uses standard Python grammar as defined in the Python Language Reference, with additional semantic interpretations for declarative behavior. The grammar remains fully compatible with Python syntax, but the runtime system assigns declarative meanings to certain constructs.
+NSAP uses standard Python grammar as defined in the Python Language Reference, with additional semantic interpretations for declarative behavior. The grammar remains fully compatible with Python syntax, but the runtime system assigns declarative meanings to certain constructs.
 
 ### Statement Categories
 
@@ -663,7 +663,7 @@ The grammar is interpreted with declarative semantics by default:
 This allows standard Python code to function as a declarative logic specification while remaining syntactically valid Python.
 ## Data Types
 
-NSAIP supports all standard Python data types with additional semantic behavior for tracking in the system. Types are classified into primitive types, collection types, and symbolic types.
+NSAP supports all standard Python data types with additional semantic behavior for tracking in the system. Types are classified into primitive types, collection types, and symbolic types.
 
 ### Primitive Types
 
@@ -803,11 +803,11 @@ Standard Python type coercion rules apply:
 
 ## Exceptions
 
-NSAIP extends Python's exception handling model to work with the declarative runtime system and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
+NSAP extends Python's exception handling model to work with the declarative runtime system and transactional execution model. Exceptions can occur during statement execution, dependency propagation, or constraint validation.
 
 ### Logic Exceptions
 
-NSAIP introduces additional exception types specific to declarative reasoning:
+NSAP introduces additional exception types specific to declarative reasoning:
 
 **CircularDependencyError**
 ```python
@@ -863,7 +863,7 @@ The system represents logical relationships using both first-order and higher-or
 
 ### First-Order Logic
 
-First-order logic statements express relationships between specific objects and their properties. The NSAIP runtime system interprets standard Python expressions as first-order logical assertions:
+First-order logic statements express relationships between specific objects and their properties. The NSAP runtime system interprets standard Python expressions as first-order logical assertions:
 
 **Atomic Facts**: Direct property assignments represent atomic predicates
 ```python
@@ -893,7 +893,7 @@ if Account.balance < 1500:
 
 ### High-Order Logic
 
-Higher-order logic allows reasoning about properties, relations, and functions as first-class entities. NSAIP supports higher-order constructs through class-level declarations and computed properties:
+Higher-order logic allows reasoning about properties, relations, and functions as first-class entities. NSAP supports higher-order constructs through class-level declarations and computed properties:
 
 **Properties as Functions**: Class-level computed properties define functions over all instances
 ```python
@@ -922,7 +922,7 @@ User.where(lambda user: user.email.endswith("@testmail.local"))
 These higher-order constructs enable the system to express meta-level reasoning patterns where rules themselves can be parameterized, composed, and reasoned about within the system.
 ## State Management
 
-The NSAIP runtime system employs an in-memory computing model where the complete program state resides in the system. State management operates through a declarative model where the runtime system automatically maintains consistency rather than requiring explicit state updates.
+The NSAP runtime system employs an in-memory computing model where the complete program state resides in the system. State management operates through a declarative model where the runtime system automatically maintains consistency rather than requiring explicit state updates.
 
 ### In-Memory State Model
 
