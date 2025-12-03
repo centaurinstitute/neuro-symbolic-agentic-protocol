@@ -1,4 +1,4 @@
-# Neuro-Symbolic AI Language Specification
+# AI Knowledge Representation Language Specification
 
 ## 1. Introduction
 
