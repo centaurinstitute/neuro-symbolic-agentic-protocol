@@ -1,4 +1,4 @@
-# Neuro-Symbolic AI Protocol
+# Neuro-Symbolic Agentic Protocol
 
 ## AI Knowledge Representation Language Specification
 
